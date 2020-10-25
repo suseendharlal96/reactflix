@@ -10,7 +10,6 @@ const MovieSection = ({ title, api }) => {
   useEffect(() => {
     const fetchMovieApi = async () => {
       const res = await axios.get(api);
-      console.log(res);
       setMovies(res.data.results);
     };
     fetchMovieApi();

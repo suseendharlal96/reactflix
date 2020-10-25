@@ -18,7 +18,7 @@ const Navbar = () => {
     <div className={`nav-container ${header && "nav-bg"}`}>
       <div className="nav-contents">
         <img
-          class="logo"
+          className="logo"
           src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netflix.png"
           alt="Netflix Logo"
         />

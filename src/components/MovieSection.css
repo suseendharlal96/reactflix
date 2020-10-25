@@ -1,0 +1,31 @@
+.movie-container {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-left: 10px;
+}
+.movie-container::-webkit-scrollbar {
+  display: none;
+}
+.title {
+  color: #ffffff;
+}
+
+.cover-pic {
+  width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+  padding: 10px;
+  transition: transform 450ms;
+}
+
+.cover-pic:hover {
+  transform: scale(1.08);
+}
+
+.big-cover-pic {
+  max-height: 250px;
+}
+.big-cover-pic:hover {
+  transform: scale(1.09);
+}

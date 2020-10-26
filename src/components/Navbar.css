@@ -8,6 +8,7 @@
 
 .nav-bg {
   background-color: #111111;
+  z-index: 999;
 }
 
 .nav-contents {

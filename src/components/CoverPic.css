@@ -1,0 +1,39 @@
+.cover-img {
+  background-position: center;
+  background-size: cover;
+  height: 450px;
+  color: #ffffff;
+}
+
+.cover-contents {
+  padding: 134px 0px 0px 15px;
+}
+
+.cover-button {
+  background-color: rgba(51, 51, 51, 0.5);
+  color: #ffffff;
+  transition: all 0.5s;
+  padding: 0.3rem;
+  margin-right: 50px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.cover-button:hover {
+  background-color: #e6e6e6;
+  color: #000000;
+}
+
+.description {
+  max-width: 550px;
+}
+
+.faded-container {
+  background-image: linear-gradient(
+    180deg,
+    transparent,
+    rgba(37, 37, 37, 0.61),
+    #111
+  );
+  height: 130px;
+}

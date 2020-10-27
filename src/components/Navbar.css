@@ -21,4 +21,19 @@
   width: 100px;
   max-height: 100px;
   object-fit: contain;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #e50914;
+  color: #ffffff;
+  padding: 7px 17px;
+  font-weight: 400;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.welcome-txt {
+  color: #e87c03;
 }

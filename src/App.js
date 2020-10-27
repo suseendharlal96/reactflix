@@ -1,14 +1,21 @@
+import React from "react";
+import { Route, BrowserRouter, Redirect, Switch } from "react-router-dom";
+
 import "./App.css";
-import MovieApi from "./util/api";
-import MovieSection from "./components/MovieSection";
 import Navbar from "./components/Navbar";
-import CoverPic from "./components/CoverPic";
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <CoverPic />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/auth" component={Auth} />
+        <Redirect from="**" to="/" />
+      </Switch>
+      {/* <CoverPic />
       <div className="container">
         {MovieApi.length &&
           MovieApi.map((movieApi) => (
@@ -18,8 +25,8 @@ function App() {
               api={movieApi.api}
             />
           ))}
-      </div>
-    </>
+      </div> */}
+    </BrowserRouter>
   );
 }
 

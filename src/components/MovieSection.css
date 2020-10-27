@@ -17,6 +17,7 @@
   object-fit: cover;
   padding: 10px;
   transition: transform 450ms;
+  cursor: pointer;
 }
 
 .cover-pic:hover {

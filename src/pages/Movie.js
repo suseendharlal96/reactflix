@@ -34,7 +34,9 @@ const Movie = () => {
           <div className="desc-container">
             <div className="desc">
               <h2>{movie?.name || movie?.original_name || movie?.title}</h2>
-              <h3>First aired on: {movie?.first_air_date}</h3>
+              <h3>
+                First aired on: {movie?.first_air_date || movie?.release_date}
+              </h3>
               <h3>Rating: {movie?.vote_average}</h3>
               <h3>Overview:</h3>
               <h4>{movie?.overview}</h4>

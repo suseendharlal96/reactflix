@@ -39,6 +39,9 @@ const Movie = () => {
               <h3>Overview:</h3>
               <h4>{movie?.overview}</h4>
               <button className="list-btn">Add to My List</button>
+              <button className="list-btn" onClick={() => history.push("/")}>
+                Back to Home
+              </button>
             </div>
           </div>
         </div>

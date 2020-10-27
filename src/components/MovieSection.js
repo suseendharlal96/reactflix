@@ -46,7 +46,7 @@ const MovieSection = ({ title, api }) => {
       </div>
     </div>
   ) : (
-    <p>Loading..</p>
+    <p style={{ color: "#ffffff" }}>Loading..</p>
   );
 };
 

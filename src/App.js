@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import Movie from "./pages/Movie";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/auth" component={Auth} />
+        <Route path="/movie/:id" component={Movie} />
         <Redirect from="**" to="/" />
       </Switch>
       {/* <CoverPic />

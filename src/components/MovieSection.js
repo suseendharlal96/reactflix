@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useHistory } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -8,6 +8,7 @@ import axios from "../util/axios";
 import "./MovieSection.css";
 
 const MovieSection = ({ title, api }) => {
+  const history = useHistory();
   const img_url = "https://image.tmdb.org/t/p/original/";
   const [movies, setMovies] = useState(null);
 
@@ -26,6 +27,12 @@ const MovieSection = ({ title, api }) => {
           <OwlCarousel items={10} className="owl-theme" margin={15}>
             {movies.map((movie) => (
               <img
+                onClick={() =>
+                  history.push({
+                    pathname: `/movie/${movie.id}`,
+                    state: { movie },
+                  })
+                }
                 key={movie.id}
                 className={`cover-pic ${
                   title === "NetflixOriginals" && "big-cover-pic"

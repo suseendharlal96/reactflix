@@ -13,6 +13,10 @@ const MovieSection = ({ title, api }) => {
   const [movies, setMovies] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchMovieApi = async () => {
       const res = await axios.get(api);
       setMovies(res.data.results);

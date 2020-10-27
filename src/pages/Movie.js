@@ -10,6 +10,7 @@ const Movie = () => {
   console.log(history);
   useEffect(() => {
     if (history?.location?.state?.movie) {
+      window.scrollTo(0, 0);
       setMovie(history?.location?.state?.movie);
     } else {
       history.push("/");

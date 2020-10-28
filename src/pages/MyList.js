@@ -53,12 +53,6 @@ const MyList = (props) => {
                 <div className="list" key={movie.id}>
                   <img
                     style={{ height: "500px", transition: "all 0.5s" }}
-                    onClick={() =>
-                      history.push({
-                        pathname: `/movie/${movie.id}`,
-                        state: { movie },
-                      })
-                    }
                     key={movie.id}
                     src={`${img_url}${movie?.image}`}
                     alt={movie.title}

@@ -5,5 +5,12 @@ export const authFragment = gql`
     email
     token
     id
+    myList {
+      id
+      name
+      date
+      rating
+      overview
+    }
   }
 `;

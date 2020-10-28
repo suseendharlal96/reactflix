@@ -1,7 +1,6 @@
 .bg-pic {
   background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/bcd713c9-291e-4186-a275-117b387eaaf2/5eacbdf4-2d9c-4613-8b9c-5071a08e396c/IN-en-20201019-popsignuptwoweeks-perspective_alpha_website_small.jpg");
   object-fit: contain;
-  /* background-repeat: no-repeat; */
   height: 100vh;
 }
 .auth-container {

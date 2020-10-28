@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import Api from "../util/api";
 import axios from "../util/axios";
@@ -6,6 +7,7 @@ import "./CoverPic.css";
 
 const CoverPic = () => {
   const [randomMovie, setRandomMovie] = useState(null);
+  const history = useHistory();
   useEffect(() => {
     const fetchRandomMovie = async () => {
       const res = await axios.get(Api[0].api);
@@ -32,7 +34,12 @@ const CoverPic = () => {
         </h1>
         <div className="btn-container">
           <button className="cover-button">Play</button>
-          <button className="cover-button">My List</button>
+          <button
+            className="cover-button"
+            onClick={() => history.push("/mylist")}
+          >
+            My List
+          </button>
         </div>
         <p
           className="description"

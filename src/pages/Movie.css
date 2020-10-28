@@ -1,27 +1,21 @@
-.main-container {
-  /* padding: 0 2%; */
-}
 .faded {
-  /* margin-top: 10%; */
-
   background: rgba(0, 0, 0, 0.65);
   height: 100%;
 }
 .content {
-  /* margin-top: 2%; */
   display: flex;
   justify-content: space-between;
   max-height: 900px;
 }
 .main-container div {
   flex-basis: 100%;
-  /* padding: 0 2%; */
 }
 .movie-img {
   object-fit: contain;
   width: 100%;
   height: 80%;
   margin-top: 14%;
+  flex-shrink: 1;
 }
 .desc-container {
   margin-top: 5%;
@@ -49,4 +43,15 @@
   color: #ffffff;
   cursor: pointer;
   border-radius: 5px;
+}
+
+.list-btn:disabled {
+  background-color: #333333;
+  cursor: no-drop;
+}
+
+@media only screen and (max-width: 550px) {
+  .img-container {
+    display: none;
+  }
 }

@@ -35,6 +35,7 @@ const Auth = (props) => {
         email: data.signin.email,
         id: data.signin.id,
         token: data.signin.token,
+        myList: data.signin.myList,
       };
       props.storeAuthData(authData);
     },
@@ -51,6 +52,7 @@ const Auth = (props) => {
         email: data.signup.email,
         id: data.signup.id,
         token: data.signup.token,
+        myList: data.signup.myList,
       };
       props.storeAuthData(authData);
     },

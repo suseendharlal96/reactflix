@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { connect } from "react-redux";
+import { Form, Field } from "react-final-form";
 
 import { authFragment } from "../util/authFragment";
 import * as action from "../store/action/index";
@@ -62,121 +63,178 @@ const Auth = (props) => {
     fetchPolicy: "no-cache",
   });
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    isSignup ? signUp({ variables: form }) : signIn({ variables: form });
+  const submitForm = (values) => {
+    isSignup ? signUp({ variables: values }) : signIn({ variables: values });
+  };
+
+  let pass = "";
+  const passwordValidate = (value) => {
+    pass = value;
+    if (!value) {
+      return "Required Field";
+    } else if (value.trim().length <= 5) {
+      return "Must be min 6 characters";
+    }
+  };
+
+  const confirmpasswordValidate = (value) => {
+    if (!value) {
+      return "Required Field";
+    } else if (pass && pass.trim() !== value) {
+      return "Password mismatch";
+    }
+  };
+
+  const emailValidate = (value) => {
+    const regEx = /^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,9})$/;
+    if (!value) {
+      return "Required Field";
+    } else if (!value.match(regEx)) {
+      return "Invalid Email";
+    }
   };
 
   return (
     <div className="bg-pic">
       <div className="auth-container">
-        <form className="auth-form" onSubmit={submitForm}>
-          <div className="form-contents">
-            <h2 style={{ color: "#ffffff", fontSize: "1.5rem" }}>
-              {" "}
-              {isSignup ? "Sign up" : " Sign In"}
-            </h2>
-            <div className="input-container">
-              <input
-                type="text"
-                autoComplete="off"
-                name="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleInputChange}
-              />
-              {errors && errors.email && (
-                <small className="invalid">{errors && errors.email}</small>
-              )}
-            </div>{" "}
-            <div className="input-container">
-              <input
-                type="password"
-                autoComplete="new-password"
-                name="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleInputChange}
-              />
-              {errors && errors.password && (
-                <small className="invalid">{errors && errors.password}</small>
-              )}
-            </div>{" "}
-            {isSignup && (
-              <>
-                <div className="input-container">
-                  <input
-                    type="password"
-                    autoComplete="new-password"
-                    name="confirmPassword"
-                    value={form.confirmPassword}
-                    onChange={handleInputChange}
-                    placeholder="Retype password"
-                  />
-                  {errors && errors.confirmPassword && (
-                    <small className="invalid">
-                      {errors && errors.confirmPassword}
-                    </small>
+        <Form
+          onSubmit={submitForm}
+          render={({ handleSubmit, form, invalid, values }) => (
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="form-contents">
+                <h2 style={{ color: "#ffffff", fontSize: "1.5rem" }}>
+                  {" "}
+                  {isSignup ? "Sign up" : " Sign In"}
+                </h2>
+                <Field name="email" validate={emailValidate}>
+                  {({ input, meta }) => (
+                    <div className="input-container">
+                      <input
+                        {...input}
+                        type="text"
+                        autoComplete="off"
+                        placeholder="Email"
+                        // value={form.email}
+                        // onChange={handleInputChange}
+                      />
+                      {meta.error && meta.touched && (
+                        <span className="invalid">{meta.error}</span>
+                      )}
+                      {errors && errors.email && (
+                        <small className="invalid">
+                          {errors && errors.email}
+                        </small>
+                      )}
+                    </div>
                   )}
+                </Field>
+                <Field name="password" validate={passwordValidate}>
+                  {({ input, meta }) => (
+                    <div className="input-container">
+                      <input
+                        type="password"
+                        {...input}
+                        autoComplete="new-password"
+                        placeholder="Password"
+                      />
+                      {meta.error && meta.touched && (
+                        <span className="invalid">{meta.error}</span>
+                      )}
+                      {errors && errors.password && (
+                        <small className="invalid">
+                          {errors && errors.password}
+                        </small>
+                      )}
+                    </div>
+                  )}
+                </Field>
+                {isSignup && (
+                  <Field
+                    name="confirmPassword"
+                    validate={confirmpasswordValidate}
+                  >
+                    {({ input, meta }) => (
+                      <div className="input-container">
+                        <input
+                          {...input}
+                          disabled={
+                            values.password && values.password.length <= 5
+                          }
+                          type="password"
+                          autoComplete="new-password"
+                          name="confirmPassword"
+                          placeholder="Retype password"
+                        />
+                        {meta.error && meta.touched && (
+                          <span className="invalid">{meta.error}</span>
+                        )}
+                        {errors && errors.confirmPassword && (
+                          <small className="invalid">
+                            {errors && errors.confirmPassword}
+                          </small>
+                        )}
+                      </div>
+                    )}
+                  </Field>
+                )}
+                <div>
+                  <button
+                    className="form-btn"
+                    disabled={loading || invalid}
+                    type="submit"
+                  >
+                    {isSignup
+                      ? signupLoading
+                        ? "Please wait.."
+                        : "Sign up"
+                      : loading
+                      ? "Please wait.."
+                      : " Sign In"}
+                  </button>
                 </div>
-              </>
-            )}
-            <div>
-              <button
-                className="form-btn"
-                disabled={loading || signupLoading}
-                type="submit"
-              >
-                {isSignup
-                  ? signupLoading
-                    ? "Please wait.."
-                    : "Sign up"
-                  : loading
-                  ? "Please wait.."
-                  : " Sign In"}
-              </button>
-            </div>
-            <div className="misc">
-              {isSignup ? (
-                <span style={{ color: "#737361" }}>
-                  Already a user?
-                  <span
-                    style={{
-                      color: "#ffffff",
-                      cursor: "pointer",
-                      marginLeft: "5px",
-                    }}
-                    onClick={changeMode}
+                <div className="misc">
+                  {isSignup ? (
+                    <span style={{ color: "#737361" }}>
+                      Already a user?
+                      <span
+                        style={{
+                          color: "#ffffff",
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                        }}
+                        onClick={changeMode}
+                      >
+                        Sign in now
+                      </span>
+                    </span>
+                  ) : (
+                    <span style={{ color: "#737361" }}>
+                      New to Netflix?
+                      <span
+                        style={{
+                          color: "#ffffff",
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                        }}
+                        onClick={changeMode}
+                      >
+                        Sign up now
+                      </span>
+                    </span>
+                  )}
+                  <a
+                    style={{ color: "#737361", textDecoration: "none" }}
+                    href="https://github.com/suseendharlal96"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    Sign in now
-                  </span>
-                </span>
-              ) : (
-                <span style={{ color: "#737361" }}>
-                  New to Netflix?
-                  <span
-                    style={{
-                      color: "#ffffff",
-                      cursor: "pointer",
-                      marginLeft: "5px",
-                    }}
-                    onClick={changeMode}
-                  >
-                    Sign up now
-                  </span>
-                </span>
-              )}
-              <a
-                style={{ color: "#737361", textDecoration: "none" }}
-                href="https://github.com/suseendharlal96"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Need help?
-              </a>
-            </div>
-          </div>
-        </form>
+                    Need help?
+                  </a>
+                </div>
+              </div>
+            </form>
+          )}
+        ></Form>
       </div>
     </div>
   );

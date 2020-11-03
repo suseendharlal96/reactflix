@@ -74,3 +74,9 @@ input:focus {
   padding: 2rem 0;
   width: 325px;
 }
+
+.show-pass {
+  display: block;
+  cursor: default;
+  text-align: end;
+}

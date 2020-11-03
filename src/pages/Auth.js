@@ -12,21 +12,18 @@ const Auth = (props) => {
   const history = useHistory();
   const [isSignup, setIsSignup] = useState(false);
   const [errors, setErrors] = useState({});
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [showPass, setShowPass] = useState(false);
 
-  const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const changeMode = () => {
-    if (form.confirmPassword !== "") {
-      setForm({ ...form, confirmPassword: "" });
+  const changeMode = (values) => {
+    console.log(values);
+    if (values.confirmPassword !== "") {
+      values.confirmPassword = "";
     }
     setIsSignup(!isSignup);
+  };
+
+  const handlePassword = () => {
+    setShowPass(!showPass);
   };
 
   const [signIn, { loading }] = useLazyQuery(SIGN_IN, {
@@ -99,7 +96,7 @@ const Auth = (props) => {
       <div className="auth-container">
         <Form
           onSubmit={submitForm}
-          render={({ handleSubmit, form, invalid, values }) => (
+          render={({ handleSubmit, invalid, values }) => (
             <form className="auth-form" onSubmit={handleSubmit}>
               <div className="form-contents">
                 <h2 style={{ color: "#ffffff", fontSize: "1.5rem" }}>
@@ -114,8 +111,7 @@ const Auth = (props) => {
                         type="text"
                         autoComplete="off"
                         placeholder="Email"
-                        // value={form.email}
-                        // onChange={handleInputChange}
+                        className="email"
                       />
                       {meta.error && meta.touched && (
                         <span className="invalid">{meta.error}</span>
@@ -130,13 +126,23 @@ const Auth = (props) => {
                 </Field>
                 <Field name="password" validate={passwordValidate}>
                   {({ input, meta }) => (
-                    <div className="input-container">
+                    <div
+                      className="input-container"
+                      style={{ position: "relative" }}
+                    >
                       <input
-                        type="password"
+                        type={showPass ? "text" : "password"}
+                        className="password"
                         {...input}
                         autoComplete="new-password"
                         placeholder="Password"
                       />
+                      <span
+                        onClick={() => handlePassword()}
+                        className="show-pass"
+                      >
+                        {showPass ? "Hide Password" : "Show Password"}
+                      </span>
                       {meta.error && meta.touched && (
                         <span className="invalid">{meta.error}</span>
                       )}
@@ -163,6 +169,7 @@ const Auth = (props) => {
                           type="password"
                           autoComplete="new-password"
                           name="confirmPassword"
+                          className="cnf-password"
                           placeholder="Retype password"
                         />
                         {meta.error && meta.touched && (
@@ -202,7 +209,7 @@ const Auth = (props) => {
                           cursor: "pointer",
                           marginLeft: "5px",
                         }}
-                        onClick={changeMode}
+                        onClick={() => changeMode(values)}
                       >
                         Sign in now
                       </span>
@@ -216,7 +223,7 @@ const Auth = (props) => {
                           cursor: "pointer",
                           marginLeft: "5px",
                         }}
-                        onClick={changeMode}
+                        onClick={() => changeMode(values)}
                       >
                         Sign up now
                       </span>
